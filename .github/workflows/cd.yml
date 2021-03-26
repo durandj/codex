@@ -1,5 +1,10 @@
 name: Release
 
+env:
+  PROJECT_ID: ${{ secrets.GCP_PROJECT }}
+  SERVICE: codex
+  REGION: us-central1
+
 on:
   push:
     branches:
