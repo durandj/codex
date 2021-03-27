@@ -34,10 +34,16 @@ jobs:
           docker image build --tag gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }} .
           docker image push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
 
+          sed --in-place \
+            --regexp-extended \
+            --expression 's|DOCKER_IMAGE|gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}|' \
+            --expression 's|DOCKER_TAG|${{ github.sha }}|' \
+            cloud_run.yml
+
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v0.4.0
         with:
-          # TODO(durandj): set service limits
           service: ${{ env.SERVICE }}
           image: gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
           region: ${{ env.REGION }}
+          metadata: ./cloud_run.yml

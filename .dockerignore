@@ -1,4 +1,7 @@
 .editorconfig
+.github
 .gitignore
 .tags
+cloud_run.yml
+License.md
 Makefile
