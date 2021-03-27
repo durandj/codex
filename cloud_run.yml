@@ -1,0 +1,39 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+
+metadata:
+  name: codex
+  namespace: '31411814642'
+
+  annotations:
+    run.googleapis.com/ingress: all
+    run.googleapis.com/ingress-status: all
+    run.googleapis.com/launch-stage: BETA
+    serving.knative.dev/creator: github-actions@theisleoffavalon.iam.gserviceaccount.com
+    serving.knative.dev/lastModifier: github-actions@theisleoffavalon.iam.gserviceaccount.com
+
+  labels:
+    cloud.googleapis.com/location: us-central1
+
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/maxScale: '1'
+        run.googleapis.com/sandbox: gvisor
+
+    spec:
+      containerConcurrency: 80
+      containers:
+        - image: DOCKER_IMAGE:DOCKER_TAG
+          ports:
+            - containerPort: 8080
+              name: http1
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 256Mi
+      timeoutSeconds: 300
+  traffic:
+    - latestRevision: true
+      percent: 100
