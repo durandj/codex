@@ -27,4 +27,4 @@ WORKDIR /srv/wiki
 
 COPY . .
 
-ENTRYPOINT ["gollum", "--port", "${PORT}"]
+ENTRYPOINT ["./docker-entrypoint.sh"]
