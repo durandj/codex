@@ -27,4 +27,4 @@ WORKDIR /srv/wiki
 
 COPY . .
 
-ENTRYPOINT ["gollum"]
+ENTRYPOINT ["gollum", "--port", "${PORT}"]
