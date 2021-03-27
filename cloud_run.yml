@@ -26,6 +26,7 @@ spec:
       containerConcurrency: 80
       containers:
         - image: DOCKER_IMAGE:DOCKER_TAG
+          args: ["--ref", "main", "--no-edit", "--mathjax", "--emoji"]
           ports:
             - containerPort: 8080
               name: http1
